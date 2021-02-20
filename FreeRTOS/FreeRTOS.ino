@@ -90,6 +90,17 @@ void TaskBlink2(void *pvParameters)
     Serial.println("TaskBlink2 Task");
     g_cnt++;
     xQueueSend(queue_TaskBlink1, &cnt, 0); // キューがFULLの場合の待ち時間0
-    delay(1000); // ms
+    while(1)
+    {
+      if (Serial.available()) {
+        unsigned char input = Serial.read();
+        if(input >= '0' && input <= '9')
+        {
+          Serial.print("input key = ");
+          Serial.println(input);
+          break;
+        }
+      }
+    }
   }
 }
